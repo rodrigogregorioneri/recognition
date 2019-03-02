@@ -77,7 +77,7 @@ public class DropboxServiceImpl implements DropboxService {
         try {
             return action.perform();
         } catch (Exception e) {
-            String messageWithCause = String.format("%s with cause: %s", exceptionMessage, e.getMessage());
+            String messageWithCause = String.format("%s causa: %s", exceptionMessage, e.getMessage());
             throw new DropboxException(messageWithCause, e);
         }
     }
