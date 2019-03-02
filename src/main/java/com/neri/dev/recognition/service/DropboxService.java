@@ -25,5 +25,4 @@ public interface DropboxService {
     void deleteFile(String filePath);
 
     void deleteFolder(String folderPath);
-
 }

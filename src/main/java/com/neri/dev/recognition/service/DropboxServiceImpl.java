@@ -10,8 +10,7 @@ import com.dropbox.core.v2.files.ListFolderResult;
 import com.dropbox.core.v2.files.Metadata;
 import java.io.InputStream;
 
-import com.neri.dev.recognition.exception.DropboxActionResolver;
-import com.neri.dev.recognition.exception.DropboxException;
+import com.neri.dev.recognition.exception.*;
 import org.springframework.stereotype.Service;
 
 @Service
