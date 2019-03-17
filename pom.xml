@@ -14,10 +14,8 @@
 	<version>0.0.1-SNAPSHOT</version>
 	<name>recognition</name>
 	<description>Projeto de Reconhecimento Facial</description>
-	<packaging>jar</packaging>
+	<packaging>war</packaging>
 	<properties>
-		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 		<java.version>1.8</java.version>
 	</properties>
 
@@ -28,7 +26,7 @@
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter</artifactId>
+			<artifactId>spring-boot-starter-web</artifactId>
 		</dependency>
 
 		<dependency>
@@ -75,7 +73,6 @@
 				<artifactId>spring-boot-maven-plugin</artifactId>
 			</plugin>
 		</plugins>
-		<defaultGoal>clean install</defaultGoal>
 	</build>
 
 </project>
