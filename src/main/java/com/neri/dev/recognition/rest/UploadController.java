@@ -2,7 +2,6 @@ package com.neri.dev.recognition.rest;
 
 import com.dropbox.core.v2.files.FileMetadata;
 import com.neri.dev.recognition.facerecognition.FaceDetectionService;
-import com.neri.dev.recognition.model.BASE64DecodedMultipartFile;
 import com.neri.dev.recognition.service.DropboxServiceImpl;
 
 import org.opencv.core.Core;
