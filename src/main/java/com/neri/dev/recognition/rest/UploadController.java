@@ -1,8 +1,11 @@
 package com.neri.dev.recognition.rest;
 
 import com.dropbox.core.v2.files.FileMetadata;
-
+import com.neri.dev.recognition.facerecognition.FaceDetectionService;
+import com.neri.dev.recognition.model.BASE64DecodedMultipartFile;
 import com.neri.dev.recognition.service.DropboxServiceImpl;
+
+import org.opencv.core.Core;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.http.HttpHeaders;
@@ -20,17 +23,37 @@ public class UploadController {
 
     @Autowired
     DropboxServiceImpl dropbox;
+    
+    @Autowired
+    private FaceDetectionService faceDetectionService;
 
 
-    @PostMapping("/")
-    public FileMetadata upload(@RequestParam("file") MultipartFile file, String path) {
+    @PostMapping(value ="/",  produces = MediaType.IMAGE_JPEG_VALUE)
+    public byte[] upload(@RequestParam("file") MultipartFile file, String path) {
         try {
-            InputStream inputStream = new ByteArrayInputStream(file.getBytes());
-            return dropbox.uploadFile(path,inputStream);
+        	if ( !validateImage(file))
+            {
+               return new byte[1];
+            }
+        	byte[] bytes = faceDetectionService.detectFace(file).toImage();
+            InputStream inputStream = new ByteArrayInputStream(bytes);
+            dropbox.uploadFile(path,inputStream);
+            return bytes;
         } catch (IOException e) {
             e.printStackTrace();
             return null;
         }
+    }
+    
+    @ResponseBody
+    @PostMapping(value = "/faceDetect/image", produces = MediaType.IMAGE_JPEG_VALUE)
+    public byte[] detectFaceImage(@RequestParam("file") MultipartFile file) throws IOException {
+
+       if ( !validateImage(file))
+       {
+          return new byte[1];
+       }
+        return faceDetectionService.detectFace(file).toImage();
     }
 
 
@@ -48,5 +71,9 @@ public class UploadController {
                 .contentType(MediaType.parseMediaType("application/octet-stream"))
                 .contentLength(metadata.getSize())
                 .body(resource);
+    }
+    
+    private Boolean validateImage(MultipartFile image) {
+        return image.getContentType().equals("image/jpeg");
     }
 }
